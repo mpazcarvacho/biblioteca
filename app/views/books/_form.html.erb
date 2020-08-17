@@ -1,0 +1,49 @@
+<%= form_with(model: book, local: true) do |form| %>
+  <% if book.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(book.errors.count, "error") %> prohibited this book from being saved:</h2>
+
+      <ul>
+      <% book.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  
+  <div class="field form-group">
+    <%= form.label :title, class:"control-label" %>
+    <%= form.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :author, class:"control-label" %>
+    <%= form.text_field :author , class: "form-control"%>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :status, class:"control-label" %>
+    <%= form.select :status, Book.statuses.keys , {}, class: "form-control"%>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :borrowed_at, class:"control-label" %>
+    <%= form.date_field :borrowed_at , as: :date, value: form.object.try(:strftime,"%m/%d/%Y"), class: 'form-control'%>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :returned_at, class:"control-label" %>
+    <%= form.date_field :returned_at, as: :date, value: form.object.try(:strftime,"%m/%d/%Y"), :include_blank => true, class: "form-control" %>
+  </div>
+
+  <div class="field form-group" >
+    <%= form.label :lent_to, class:"control-label" %>
+    <%= form.text_field :lent_to, class: "form-control" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Guardar', class:"btn btn-success" %>
+  </div>
+
+<% end %>
